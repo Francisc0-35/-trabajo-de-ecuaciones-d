@@ -1,0 +1,319 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{circuits.ee.IEC}
+\usepackage{tikz}
+\usepackage{fancybox}
+\usepackage{float}
+\renewcommand{\arraystretch}{1.5}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\author{Francisco Escobar Ceballos }
+\title{Ecuaciones Diferenciales}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+{\bfseries\LARGE Universidad del Cauca}\\
+\vspace{1cm}
+{\scshape\Large Facultad de Ingenier\'ia civil \par}
+\vspace{3cm}
+{\scshape\Huge Circuito en serie análogo \par}
+\vspace{3cm}
+\vfill
+{\Large presentado por: \par}
+{\Large Francisco Javier Escobar Ceballos \par}
+\vfill
+{\Large docente: \par}
+{\Large Jhonatan Collazos Ramirez \par}
+\vfill
+{\Large Agosto 2022 \par}
+\end{titlepage}
+\maketitle\
+
+\section{ Resumen.}
+El presente trabajo tiene por objetivo brindar una de las aplicaciones en el campo de los circuitos RLC en serie de las Ecuaciones Diferenciales y su implementación para resolver algunos ejercicios de ejemplo. Para llevar a cabo dicha tarea se presenta primero teoría sobre un circuito en serie análogo y su representación gráfica, pudiendo ver sus principales componentes: resistencias, capacitores e inductores conectados en serie, donde se da a conocer las ecuaciones principales y se procede a implementarlo en diversos ejercicios y donde uno de ellos se realizó en Matlab que es un software matemático, donde se realizó un algoritmo para resolución del ejercicio.
+\begin{itemize}
+\item  Comprender, conocer y analizar el circuito RCL en serie . 
+\item Analizar e intentar comprender el comportamiento que tienen este elemento  en la elaboración de circuitos electrónicos y su posible utilización.
+\end{itemize}
+
+\section{Introduccion. }
+Gran parte de los sistemas que nos rodean están sometidos al cambio, por tanto, es un hecho cotidiano para todos nosotros. Las Maten áticas son muy útiles para investigar, entre otros, fenómenos como el movimiento de los planetas, la desintegración de sustancias radiactivas, la velocidad de las reacciones químicas y los patrones meteorológicos. Por otro lado, los biólogos investigan en campos tales como la contaminación o la dinámica de poblaciones. Incluso en áreas, aparentemente alejadas de la matemática, como las Ciencias Políticas o la Medicina, es frecuente que recurran a los modelos matemáticos, en los cuales la clave está en el cambio. Muchos de estos modelos se expresan a través de una ecuación diferencial. Si $ y = f(t)$
+es una función que relaciona las variables t e y, entonces su derivada
+\begin{equation}
+  y'= \frac{dy}{dt}
+\end{equation}  
+nos indica la tasa de cambio o velocidad de cambio de la variable y con respecto de la variable t.\\
+Cuando estudiamos un problema del mundo real necesitamos usualmente desarrollar un marco matemático. Sabemos que el proceso por el que se crea y evoluciona este marco es la construcción de un modelo matemático, siendo algunos de ellos muy precisos, especialmente los de la Física. Sin embargo, otros lo son menos, como problemas de Biología o Ciencias Sociales, pero en los últimos años los artículos de estas áreas se han vuelto lo suficientemente precisos como para poder expresarlos matemáticamente.\vspace{0.5cm}
+Un ejemplo de creación de un modelo continuo lo tenemos en la predicción del tiempo. En teoría, si pudiésemos programar en un ordenador todas las hipótesis correctas, así como los enunciados matemáticos apropiados sobre las formas en que las condiciones climáticas operan, tendríamos un buen modelo para predecir el tiempo mundial. En el modelo del clima global, un sistema de ecuaciones calcula los cambios que dependen del tiempo, siendo las variables el viento, la temperatura y la humedad, tanto en la atmosfera como en la tierra. El modelo1 puede predecir también las alteraciones de la temperatura en la superficie de los océanos.\vspace{0.5cm} 
+Por todo lo comentado anteriormente, hemos puesto de manifiesto que en los modelos matemáticos del mundo real tienen gran importancia el estudio de las ecuaciones diferenciales. En cualquier lugar donde se lleve a cabo un proceso que cambie continuamente en relación al tiempo (rapidez de variación de una variable con respecto a otra), suele ser apropiado el uso de las ecuaciones diferenciales.\vspace{0.5cm}
+\section{Marco Teorico. }
+\section*{Condiciones Iniciales. }
+De las definiciones y ejemplos de la sección anterior se ve que en general las ecuaciones diferenciales pueden tener una infinidad de soluciones. Entonces podemos preguntarnos: ¿cómo escoger alguna de las soluciones en particular? Las ecuaciones diferenciales servirán para modelar diversas situaciones en ingeniería y ciencias, de modo que la pregunta anterior tiene mucho sentido, pues si para resolver algún problema aplicado se requiere de sólo una respuesta del modelo y en lugar de esto encontramos una infinidad de posibles respuestas, aún faltará decidir cuál de ellas resuelve el problema; así pues, se necesita más información para decidir.\vspace{0.5cm}
+Por ejemplo, en un problema de caída libre, si un objeto parte desde una altura de 100 m sobre el suelo, en la sección 1:1 hemos visto que su altura estará dada en cada momento t por:
+\begin{equation*}
+  S(t)=\frac{1}{2} gt^2 + v0t + s0
+\end{equation*} 
+Donde la información dada nos permite ver que s0 = 100 m, pero no se conoce la velocidad inicial v0. La expresión “parte desde una altura de 100 m” nos da la idea de que puede haber un empuje o velocidad al iniciar el experimento, pero no nos da su valor. Así que lo más que podemos decir es que la altura del móvil al tiempo t será,$ S(t)=-4.9t^2 + v0t + 100$, y para una respuesta a cualquier pregunta concreta sobre el movimiento necesariamente dependerá del valor v0. Esta cantidad, que debería conocerse para determinar una única solución, es lo que se conoce como una condición inicial.\\
+Dada una solución y(t) de una ecuación diferencial $F(t, y, y$’$) =0$,una condición inicial se especifica cómo $y(t0) = y0$.Es decir, la solución $y(t)$  toma el valor y0, para $t= t0$.Si una ecuación diferencial puede resolverse para obtener una solución general que contiene una constante arbitraria, bastará con una condición inicial para determinar una solución particular; en casos en que la solución general de una ecuación diferencial contenga dos o más constantes arbitrarias, es de esperarse que se necesiten dos o más condiciones, aunque éstas se pueden dar de varias formas, que revisaremos en su oportunidad.
+\section*{ Ejemplo }
+
+\section*{Numero 1:}
+$y' + ty = y    ;   y (1)= 3 $\vspace{5mm}\\
+$y'=y-ty$\vspace{5mm}\\
+$\frac{dy}{dt} = y (1-t) $\vspace{5mm}\\
+$\int(\frac{dy}{dt} ) \mathrm{d}x =\int( 1-t) \mathrm{d}x$\\$\ln(y)= t-\frac{t^2}{2} + C$\vspace{5mm}\\
+$\ln3=1-\frac{1}{2}  + C$\vspace{5mm}\\
+$\ln3-\frac{1}{2} = C$\vspace{5mm}\\
+R/ $ \ln(y)=t-\frac{t^2}{2} +  \ln3-\frac{1}{2} $ \vspace{5mm}\\
+\section{Circuito en serie análogo. }
+
+O circuito LRC en serie, a estos circuitos también se les llama circuitos de segundo orden ya que la ecuación que resulta al aplicar las leyes de Kirchoff es una ecuación diferencial de segundo orden.\
+\begin{center}
+Circuito  eléctrico\\ 
+\begin{tikzpicture}[
+    circuit ee IEC,
+    x = 6cm, y = 5cm,
+    every info/.style = {font = \scriptsize},
+    set diode graphic = var diode IEC graphic,
+    set make contact graphic = var make contact IEC graphic,
+  ]
+  \foreach \i in {1,...,3} {
+    \node [contact] (lower contact \i) at (\i,0) {};
+    \node [contact] (upper contact \i) at (\i,1) {};
+  }
+  \draw (upper contact 1) to [diode] (lower contact 1);
+  \draw (lower contact 2) to [capacitor] (upper contact 2);
+  \draw (upper contact 1) to [resistor = {ohm = 6}]
+        (upper contact 2);
+  \draw (lower contact 2) to [resistor = {adjustable}]
+        (lower contact 3);
+  \draw (lower contact 1) to [
+           voltage source = {near start,
+                             direction info = {volt = 12}},
+           inductor = {near end}]
+        (lower contact 2);
+  \draw (upper contact 2) to [make contact = {near start},
+                              battery = {near end,
+                                         info = {carga}}]
+        (upper contact 3);
+  \draw (lower contact 3) to [bulb = {minimum height = 0.6cm}]
+        (upper contact 3);
+\end{tikzpicture}\vspace{5mm}\\
+Circuito RCL\\
+\begin{tikzpicture}[
+    circuit ee IEC,
+    x = 6cm, y = 5cm,
+    every info/.style = {font = \scriptsize},
+    set diode graphic = var diode IEC graphic,
+    set make contact graphic = var make contact IEC graphic,
+  ]
+  \foreach \i in {1,...,2} {
+    \node [contact] (lower contact \i) at (\i,0) {};
+    \node [contact] (upper contact \i) at (\i,1) {};
+  }
+  \draw (upper contact 1) to [voltage source ={volt = 12}] (lower contact 1);
+  \draw (lower contact 2) to [capacitor] (upper contact 2);
+  \draw (upper contact 1) to [resistor = {ohm = 6}]
+        (upper contact 2);
+  
+         \draw (lower contact 1) to [inductor ]
+        (lower contact 2);
+  
+\end{tikzpicture}\vspace{5mm}\\
+
+
+Donde:
+\begin{tabular}{|c|c|}\hline
+
+SIMBOLO       & SIGNIFICADO\\ \hline
+
+L            &   bobina o inductor\\ \hline
+
+R   &   resistencia\\ \hline
+
+C &  condensador o resistencia\\ \hline
+
+\end{tabular}\vspace{5mm}\\
+\end{center}
+\section*{Resistencia. }
+Se le denomina resistencia eléctrica a la oposición al flujo de corriente eléctrica a través de un conductor.  La unidad de resistencia en el Sistema Internacional es el ohmio, que se representa con la letra griega, en honor al físico alemán Georg Simon Ohm, quien descubrió el principio que ahora lleva su nombre.
+\section*{Capacitor. }
+Un capacitor o condensador eléctrico es un dispositivo que se utiliza para almacenar energía (carga eléctrica) en un campo eléctrico interno. Es un componente electrónico pasivo y su uso es frecuente tanto en circuitos electrónicos, como en los analógicos y digitales.
+\section*{Inductor. }
+Un inductor es un componente que consiste en un alambre u otro conductor conformado para aumentar el flujo magnético a través del circuito, normalmente en forma de bobina o hélice, con dos terminales.\\
+
+Muchos sistemas físicos se describen mediante una ecuación diferencial de segundo orden similar a la de ecuación diferencial de movimiento forzado amortiguamiento. con\vspace{5mm}\\
+\begin{equation}
+m\frac{d^2x}{dt^2} + B\frac{dx}{dt}+kx = f(t) \vspace{5mm}\\
+\end{equation}
+Si i(t) denota la corriente en el circuito en serie LRC, por la segunda ley de Kirchoff la suma de estos voltajes es igual al voltaje E(t) aplicado al circuito:
+\begin{equation}
+L\frac{di}{dt} +Ri+ \frac{1}{C}q = E(t) \vspace{5mm}\\
+\end{equation}
+Pero la carga q(t) en el capacitor se relaciona con la corriente i(t) con i  dqdt, así la
+ecuación (33) se convierte en la ecuación diferencial lineal de segundo orden
+\begin{equation}
+L\frac{d^2q}{dt^2} +R\frac{dq}{dt} + \frac{1}{C}q = E(t) \\
+\end{equation}
+La nomenclatura usada en el análisis de circuitos es similar a la que se emplea
+para describir sistemas resorte/masa.Si E(t)$= 0$, se dice que las \textbf{vibraciones eléctricas}\ del circuito están 
+\textbf{libres}. Debido a que la ecuación auxiliar para (34) es $Lm^2 + Rm + 1/C= 0$, habrá tres formas de solución con R  0, dependiendo del valor del discriminante $R^2- 4L/C$. Se dice que el circuito es:\vspace{5mm}\\
+\begin{center}
+\textbf{Sobreamortiguado}   si  \hspace{2cm}$ R^2 -4L/C> 0,$\vspace{5mm}\\
+\textbf{Críticamente amortiguado}  si\hspace{1cm} $  R^2- 4L/C =0,$\vspace{5mm}\\
+y \textbf{Subamortiguado}     si \hspace{2.3cm} $R^2 - 4L/C <0.$\vspace{5mm}\\
+\end{center}
+En cada uno de estos tres casos, la solución general de (34) contiene el factor $e^{-Rt2L}$
+,así $q(t)\rightarrow 0 $  conforme  $ t
+\rightarrow \infty$ . En el caso subamortiguado cuando $q(0)= q0$
+, la carga en el capacitor oscila a medida que ésta disminuye; en otras palabras, el capacitor se
+carga y se descarga conforme  $ t
+\rightarrow \infty$ . Cuando $E(t) = 0  y  R = 0$, se dice que el circuito
+no está amortiguado y las vibraciones eléctricas no tienden a cero conforme t crece sin
+límite; la respuesta del circuito es \textbf{armónica simple} .
+\section*{Ejemplo 1 : }
+subamortiguado
+
+
+$v(0) = - 12V$ y $ (0) =12/2=6 A$\vspace{5mm} \\  %voltage y corriente
+$para \ t >0$, tenemos un circuito RLC en serie\vspace{5mm}\\
+$\alpha = R / (2L) = 2 / (2 * 0.5) = 2$\vspace{5mm}\\
+$Wo=\frac{1}{\sqrt{LC}} =\frac{1}{0.5*1/4}=2\sqrt{2} $\vspace{5mm}\\
+como $\alpha$ es menor que Wo tenemos una respuesta subamartiguda\vspace{5mm}\\
+$wd = \sqrt{Wo^ 2 - a^2}  = \sqrt{8 - 4} = 2$\vspace{5mm}\\
+$i(t) (Acos(21)+ Bsin(2t))e^{-2t}$\vspace{5mm}\\
+$i(0)=15=A$\vspace{5mm}\\
+$\frac{di}{dt} = -2(15cos(2t) + Bsin(2t))+(-2x15sin(2t)=2Bcos(2t))e^{-\alpha t}$\vspace{5mm}\\
+$\frac{di(0)}{dt} dt=-30+2B=- (1/L) [Ri(0) + Vc(0)] = - 2[30 - 30] = 0$\vspace{5mm}\\
+Así,$ B = 15 and i(t)=(15cos(2t)+15sin(2t))e^{-2t}A$\vspace{5mm}\\
+\section*{Ejemplo 2 }
+Corriente de estado estable
+Encuentre la solución de estado estable qp (t) y la corriente de estado estable en un circuito LRC en serie cuando el voltaje aplicado es E(t)  E0
+sen gt.
+SOLUCIÓN La solución de estado estable qp
+(t) es una solución particular de la ecuación diferencia.
+$L\frac{d^2q}{dt^2} +R\frac{dq}{dt} + \frac{1}{C}q = E0 sen y t $\
+Con el método de coeficientes indeterminados, se supone una solución particular de la forma
+ $qp(t) =A sen* y t+ B cos* y t $ Sustituyendo esta expresión en la ecuación diferencial e igualando coeficientes, se obtiene
+ \begin{equation}
+  A = \frac{E0(Ly - \frac{1}{Cy}/)}{(-y(L^2y^2 -\frac{2L}{C} + \frac{1}{C^2y^2} + R^2)}
+ \end{equation}
+\begin{equation}
+B = \frac{E0 R}{(-y(L^2y^2 -\frac{2L}{C} + \frac{1}{C^2y^2} + R^2)}
+\end{equation}
+Es conveniente expresar A y B en términos de algunos nuevos símbolos.\\
+Si $X = Ly - \frac{1}{Cy}$ entonces\vspace{5mm}\\
+$Z^2 = L^2y^2 -\frac{2L}{C}+ \frac{1}{C^2y^2}$\vspace{5mm}\\
+Si$Z = \sqrt{X^2 + R^2}$ entonces\\
+$Z^2 = L^2y^2 - \frac{2L}{C}+ \frac{1}{C^2y^2} + R^2$\vspace{5mm}\\
+Por tanto$ A =E0X(yZ^2)$ y$ B =E0R(yZ^2)$, así que la carga de estado estable es\vspace{5mm}\\
+$q{p}(t) = -\frac{E0X}{yZ^2]} \sen y t - \frac{E0R}{yZ^2}\cos yt $\vspace{5mm}\\
+Ahora la corriente de estado estable está dada por $ip(t)= q'p(t)$\vspace{5mm}\\
+$ip(t) = \frac{E0}{Z}(\frac{R}{Z}\sin yt - \frac{X}{Z}\cos yt)$\vspace{5mm}\\
+Las cantidades$ X =Ly -\frac{1}{CyY} $ y $ Z \sqrt{X^2 R^2 }$ definidas en el ejemplo 11 se llaman reactancia e impedancia del circuito, respectivamente. Tanto la \textbf{reactancia}  como la \textbf{impedancia } se miden en ohms.
+\section{Ejercicio RCL aplicacion. }
+Encuentre la carga en el capacitor de un circuito en serie LRC en
+$\ t = 0.01$ s cuando \\
+$L=0.05 h$, 
+$R = 2\varOmega$, 
+$C= 0.01 f$,
+$ E(t) = 0 V$, 
+$q(0) = 5 C$ 
+e$\ i(0) = 0 $A. Determine la primera vez en que la carga del capacitor es igual a cero.\vspace{5mm}\\
+Tenemos que:
+\begin{table}[t]
+\begin{center}
+\begin{tabular}{| r | l | c |}
+datos & cantidad & unidades \\ \hline
+t     & 0.01 &  segundos \\\hline
+L     & 0.05h& henrios\\\hline
+R     & 2Ohm& ohmios \\\hline
+C     & 0.01f& faradios\\\hline
+E(t)   &   0V& voltios\\\hline
+q(0)&  5C&culombios\\\hline
+i(0)&  0A&amperios\\ \hline
+\end{tabular}
+\caption{datos del ejercicio}
+\label{tab:fruta}
+\end{center}
+\end{table}
+$L\frac{d^2q}{dt^2} +R\frac{dq}{dt} + \frac{1}{C}q = E(t) $\vspace{5mm}\\
+ $0.05q" + 2q' +1/ 0,01q=0$\vspace{5mm}\\
+ Lo llevamos al mundo del algebra
+$0,05m^2+2m+ 100 = 0 $\vspace{5mm}\\
+$ m^2 + 40m + 2000 = 0$\vspace{5mm}\\
+$M=\frac{-40\pm\sqrt{1600–8000}}{2} $\vspace{5mm}\\
+$M=(-40 \pm 80i)/2$\vspace{5mm}\\
+$M=-20\pm40i$\vspace{5mm}\\
+$q(t) = e{-20t} (C1 \cos40 t+ C1 \sin 40t)$\vspace{5mm}\\
+$C1=?\vspace{5mm}\\$
+$C2=?\vspace{5mm}\\$
+$q$’$(0)=0\vspace{5mm}\\$
+$q(0) = C 1=5\vspace{5mm}\\$
+$q$’$ (t) = - 20e ^{- 20} (C1 \cos * 40t +C2 \sin 40 t) 
++e^{-20t}(- 40C, \sin * 40t + 40c C2 * cos 40t)\vspace{5mm}\\$
+$q$’$(0) =0\vspace{5mm}\\$
+$- 20(C1) + 40C2 = 0\vspace{5mm}\\$
+$- 100 + 40C2= 0\vspace{5mm}\\$
+$ C2= 100/40 = 5/2\vspace{5mm}$\\$.$
+$g(t) = e ^{- 20t} (5\cos 40t + 5/2 * \sin 40t)\vspace{5mm}$\\
+Gráficamente nuestra ecuación\\
+Reemplzamos la $m$ por $x$
+\begin{table}[H]
+		\centering
+		\caption{Valores de la variables}
+		\vspace{2.5mm}
+	\begin{tabular}{c|c|c}
+		$x$	&	$x^{2} + 5x +6$	& $y$\\
+		\hline
+		-40	&	$\left(-40\right)^{2} + 40\left(-40\right) +2000$	& 2000\\
+		-20	&	$\left( -20\right)^{2} + 40\left( -20\right) +2000$	& 1600\\
+		0	&	$\left( 0\right)^{2} + 40\left( 0\right) +2000$	& 2000\\
+	\end{tabular}
+	\end{table}
+
+	\begin{figure}[H]
+		\centering
+		\selectlanguage{english}
+		\begin{tikzpicture}
+		\draw[dashed, gray!15](-4,-1) grid (1,20);
+		\draw[line width = 0.5mm,  <-> ](-6.5,0)--(1.5,0)node[right]{$x$};
+		\draw[line width = 0.5mm,  <-> ](0, -1.5)--(0,20)node[above]{$y$};
+		\draw[domain = -4:0, red, samples = 1000,line width = 0.7mm]plot(\x,{\x*\x +4*\x +20});
+		\node at (-2.5,4){$x^{2} + 40x +2000$};
+		\foreach \x in {-4,...,1}
+		\draw(\x, 1mm)--(\x, -1mm) node[below left]{\scriptsize $\x$};
+		\foreach \y in {1,...,20}
+		\draw(1mm, \y)--(-1mm,\y) node[below left]{\scriptsize $\y$};
+		\draw[draw = blue](-4,0) circle (1.5mm);
+		\draw[draw = blue](0,0) circle (1.5mm);
+		\end{tikzpicture}
+		\selectlanguage{spanish}
+	\end{figure} 
+\section{Conclusiones. }
+Nos pudimos dar cuenta que los circuitos RLC son utilizados como filtro de frecuencia o transformaciones de impedancia, es los circuitos RLC se pueden comportar múltiples inductancias.\ Un circuito RLC es un circuito lineal el cual posee una resistencia eléctrica, una bobina(inductancia) y un condensador(capacitancia). Hay dos ejemplos de circuitos RLC, en serie o en paralelo, según la interconexión de los tres tipos de componentes. El comportamiento de un circuito RLC se describen generalmente por una ecuación diferencial de segundo orden (en donde los circuitos RC o RL funcionan como circuitos de primero orden).
+\section{Referencias.}
+
+\textit{\textbf{Creditos  a las paginas, sitios web o libros de donde se tomo la informacion:}}
+\vspace{0.5cm}\\
+Videos de youtube de donde se tomo los ejercicios:EDO -51. Circuito LRC. Punto 45. Sección 5.1. Dennis G. Zill \textit{https://www.youtube.com/watch?v=w0Ed5oSqiL4}\vspace{0.5cm}\\
+Circuito RLC serie Subamortiguado, ejemplo 01.\emph{https://www.youtube.com/watch?v=pPweWGGMPk8}
+Prezi.{{https://prezi.com/p/gfsojpo0b5ln/circuitos-rcl/}\vspace{0.5cm}\\
+Ecuaciones Diferenciales\emph{Ecuaciones diferenciales,con problemas con valores en la frontera, septima edicion, autores: Dennis G.Zill, Michael R.Cuellen.2009}\vspace{0.5cm}\\
+Ecuación diferencial con condiciones iniciales | Problema de valor inicial Ejemplo 1\emph{https://www.youtube.com/watch?v=ejyLvEIpv-Q}\vspace{0.5cm}\\
+Tema 1 ECUACIONES DIFERENCIALES\emph{https://www.youtube.com/watch?v=pJw65e2wR8w}\vspace{0.5cm}\\
+Circuitos RLC, lo que necesita saber para empezar a entender el tema.\emph{https://www.youtube.com/watch?v=Lyt69EvbxBE}  
+        
+\end{document}
+
+
